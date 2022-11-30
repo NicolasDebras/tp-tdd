@@ -24,19 +24,11 @@ class DrivingLicenceFinderServiceTest {
 
     DrivingLicence fakeDrivingLicence;
 
-    @BeforeEach
-    void setUpDatabase() {
-        CreateNewDrivingLicence creationService = new CreateNewDrivingLicence(database, new DrivingLicenceIdGenerationService());
-
-        this.fakeDrivingLicence = creationService.CreateNewDrivingLicence("000000000000000").get();
-    }
 
     @Test
     @DisplayName("Should find driving licence with id")
     void should_find() {
-        var foundDrivingLicence = service.findById(fakeDrivingLicence.getId());
 
-        Assertions.assertTrue(foundDrivingLicence.isPresent());
     }
 
     @Test
