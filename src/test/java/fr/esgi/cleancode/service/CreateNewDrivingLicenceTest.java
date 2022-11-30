@@ -9,26 +9,25 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DrivingLicenceCreateServiceTest {
 
     private final InMemoryDatabase db = InMemoryDatabase.getInstance();
-    private final CreateNewDrivingLicence service = new CreateNewDrivingLicence(db);
+    private final CreateNewDrivingLicence service = new CreateNewDrivingLicence(db, new DrivingLicenceIdGenerationService());
 
     private final DrivingLicenceFinderService find = new DrivingLicenceFinderService(db);
 
     @Test
     void should_not_create_null_ID_social_security() {
         Exception exception = assertThrows(InvalidDriverSocialSecurityNumberException.class, () -> {
-            final var actual = service.CreateNewDrivingLicence (null);
+            final var actual = service.CreateNewDrivingLicence ("");
         });
 
         String expectedMessage = "SOCIAL SECURITY NUMBER IS NULL";
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(actualMessage, expectedMessage);
     }
 
     @Test
@@ -40,20 +39,20 @@ class DrivingLicenceCreateServiceTest {
         String expectedMessage = "SOCIAL SECURITY NUMBER HAVE NOT 15 CHAR";
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(actualMessage, expectedMessage);
     }
 
 
     @Test
     void should_not_create_not_number_ID_social_security() {
         Exception exception = assertThrows(InvalidDriverSocialSecurityNumberException.class, () -> {
-            final var actual = service.CreateNewDrivingLicence("a");
+            final var actual = service.CreateNewDrivingLicence("aaaaaaaaaaaaaaa");
         });
 
         String expectedMessage = "SOCIAL SECURITY NUMBER IS NOT NUMBER";
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(actualMessage, expectedMessage);
     }
 
     @Test
