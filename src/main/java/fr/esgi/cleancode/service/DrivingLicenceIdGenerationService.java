@@ -1,5 +1,8 @@
 package fr.esgi.cleancode.service;
 
+import fr.esgi.cleancode.model.DrivingLicence;
+
+import java.util.Optional;
 import java.util.UUID;
 
 public class DrivingLicenceIdGenerationService {
@@ -8,7 +11,7 @@ public class DrivingLicenceIdGenerationService {
         return UUID.randomUUID();
     }
 
-    public UUID generateNewDrivingLicenceId(String id_social_currency) {
+    public Optional<DrivingLicence> generateNewDrivingLicenceId(String id_social_currency) {
         return UUID.randomUUID();
     }
 }

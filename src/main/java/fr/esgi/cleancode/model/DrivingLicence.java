@@ -16,4 +16,5 @@ public class DrivingLicence {
     @With
     @Default
     int availablePoints = 12;
+
 }
