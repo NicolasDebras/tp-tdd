@@ -2,11 +2,7 @@ package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.database.InMemoryDatabase;
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
-import fr.esgi.cleancode.model.DrivingLicence;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DrivingLicenceCreateServiceTest {
 
     private final InMemoryDatabase db = InMemoryDatabase.getInstance();
-    private final CreateNewDrivingLicence service = new CreateNewDrivingLicence(db, new DrivingLicenceIdGenerationService());
+    private final CreateNewDrivingLicenceService service = new CreateNewDrivingLicenceService(db, new DrivingLicenceIdGenerationService());
 
     private final DrivingLicenceFinderService find = new DrivingLicenceFinderService(db);
 
@@ -74,6 +70,6 @@ class DrivingLicenceCreateServiceTest {
         final var res = service.CreateNewDrivingLicence("111111111111111");
         final var actual = find.findById(res.get().getId());
 
-        assertTrue(actual.isEmpty()) ;
+        assertTrue(!actual.isEmpty()) ;
     }
 }

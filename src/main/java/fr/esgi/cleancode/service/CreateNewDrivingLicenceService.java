@@ -6,9 +6,10 @@ import fr.esgi.cleancode.model.DrivingLicence;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
-public class CreateNewDrivingLicence {
+public class CreateNewDrivingLicenceService {
 
     private final InMemoryDatabase database;
 
@@ -20,7 +21,7 @@ public class CreateNewDrivingLicence {
         if (id_social_currency.isEmpty()) {
             throw new InvalidDriverSocialSecurityNumberException("SOCIAL SECURITY NUMBER IS NULL");
         }
-        if (id_social_currency.length() == 14) {
+        if (id_social_currency.length() != 15) {
             throw new InvalidDriverSocialSecurityNumberException("SOCIAL SECURITY NUMBER HAVE NOT 15 CHAR");
         }
         try {
@@ -29,10 +30,12 @@ public class CreateNewDrivingLicence {
         catch (NumberFormatException e){
             throw new InvalidDriverSocialSecurityNumberException("SOCIAL SECURITY NUMBER IS NOT NUMBER");
         }
+        UUID id = DrivingLicenceId.generateNewDrivingLicenceId();
         DrivingLicence drivingLicence = DrivingLicence.builder()
+                .id(id)
                 .driverSocialSecurityNumber(id_social_currency)
                 .build();
-        result = Optional.ofNullable(database.save(DrivingLicenceId.generateNewDrivingLicenceId(), drivingLicence));
+        result = Optional.ofNullable(database.save(id, drivingLicence));
         return result;
     }
 }
