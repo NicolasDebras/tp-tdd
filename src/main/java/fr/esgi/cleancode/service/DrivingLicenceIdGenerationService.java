@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class DrivingLicenceIdGenerationService {
 
-    public UUID generateNewDrivingLicenceId() {
+    public static UUID generateNewDrivingLicenceId() {
         return UUID.randomUUID();
     }
 
