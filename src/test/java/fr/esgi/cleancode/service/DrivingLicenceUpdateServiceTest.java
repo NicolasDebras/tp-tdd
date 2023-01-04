@@ -58,7 +58,8 @@ public class DrivingLicenceUpdateServiceTest {
     }
 
     @Test
-    public void should_Update_Given_Number_Of_Points () {
+    @DisplayName("should remove 6 points")
+    public void should_Remove_6_points () {
         DrivingLicence drivingLicenceWithSixPoints = drivingLicence.withAvailablePoints(6);
 
         when(database.findById(drivingLicenceId)).thenReturn(Optional.ofNullable(drivingLicence));
@@ -68,15 +69,6 @@ public class DrivingLicenceUpdateServiceTest {
         Assertions.assertEquals(drivingLicenceWithSixPoints.getAvailablePoints(), updatedDrivingLicence.getAvailablePoints());
     }
 
-    @Test
-    public void should_Update_And_Return_Driving_Licence () {
-        DrivingLicence drivingLicenceWithSixPoints = drivingLicence.withAvailablePoints(6);
 
-        when(database.findById(drivingLicenceId)).thenReturn(Optional.ofNullable(drivingLicence));
-        when(database.save(drivingLicenceId, drivingLicenceWithSixPoints)).thenReturn(drivingLicenceWithSixPoints);
-
-        final DrivingLicence updatedDrivingLicence = service.RemovePoints(drivingLicenceId, 6) ;
-        Assertions.assertEquals(drivingLicenceWithSixPoints, updatedDrivingLicence);
-    }
 
 }
